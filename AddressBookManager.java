@@ -1,8 +1,12 @@
 package com.AddressBookSystemLambda;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
-import java.util.jar.JarFile;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class AddressBookManager {
@@ -184,6 +188,7 @@ public class AddressBookManager {
             System.out.println("Data Read successfully From AddressBook.txt");
     }
 
+    //read and write json file
     public void readJsonFile() throws ParseException {
         new JSONFile().readJsonFile();
         System.out.println("Data Read successfully From AddressBook.json");
@@ -192,6 +197,17 @@ public class AddressBookManager {
     public void writeJsonFile(){
         new JSONFile().writeJsonFile(detailedEntries);
         System.out.println("Data stored successfully in AddressBook.json");
+    }
+
+    //read and write csv file
+    public void writeCSVFile() throws IOException {
+        new CSVFile().writeCSVFile(detailedEntries);
+        System.out.println("Data stored successfully in AddressBook.csv");
+    }
+
+    public void readCSVFile() throws FileNotFoundException {
+        new CSVFile().readCSVFile();
+        System.out.println("Data Read successfully From AddressBook.csv");
     }
 
 
@@ -268,12 +284,13 @@ public class AddressBookManager {
             }
         }
     }
-    public boolean takeOption() throws ParseException {
+    public boolean takeOption() throws ParseException, IOException {
         boolean conditon = true;
         while (conditon) {
             System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState 5:viewPersonsByCityOrState " +
                     "6:countPersonsByCityState 7:sortAlphabetically 8:sortCityStateZip 9:Write address in system file 10:Read address in system file " +
-                    "11:Read data from JsonFile 12:Write data to JsonFile or 0 to quit");
+                    "11:Read data from JsonFile 12:Write data to JsonFile" +
+                    "13:Write data from CSVFile 14:Read data to CSVFile or 0 to quit");
             int opt = sc.nextInt();
             switch (opt) {
                 case 1:
@@ -311,6 +328,12 @@ public class AddressBookManager {
                     break;
                 case 12:
                     writeJsonFile();
+                    break;
+                case 13:
+                    writeCSVFile();
+                    break;
+                case 14:
+                    readCSVFile();
                     break;
                 case 0:
                     conditon = false;
